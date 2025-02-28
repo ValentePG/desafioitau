@@ -37,18 +37,19 @@ class TransactionControllerTestIT {
                 .valor(BigDecimal.valueOf(50.00))
                 .dataHora(OffsetDateTime.now()).build();
 
-        System.out.println(dto.toString());
-
         var json = objectMapper.writeValueAsString(dto);
-        System.out.println(json);
+        var count = 10;
+        while (count > 0){
+            RestAssured.given()
+                    .contentType("application/json")
+                    .accept("application/json")
+                    .body(json)
+                    .post("/transacao")
+                    .then()
+                    .statusCode(201)
+                    .log().all();
+            count--;
+        }
 
-        RestAssured.given()
-                .contentType("application/json")
-                .accept("application/json")
-                .body(json)
-                .post("/transacao")
-                .then()
-                .statusCode(201)
-                .log().all();
     }
 }
