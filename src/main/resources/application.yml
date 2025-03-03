@@ -1,3 +1,5 @@
 spring:
   application:
     name: desafiovagaitau
+properties:
+  time-window: 60
