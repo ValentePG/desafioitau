@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = RestAssuredConfig.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -35,7 +36,9 @@ class TransactionControllerTestIT {
 
         TransactionDTO dto = TransactionDTO.builder()
                 .valor(BigDecimal.valueOf(50.00))
-                .dataHora(OffsetDateTime.now()).build();
+                .dataHora(OffsetDateTime.now(ZoneOffset.of("-03:00"))).build();
+
+        System.out.println(dto.dataHora());
 
         var json = objectMapper.writeValueAsString(dto);
         var count = 10;

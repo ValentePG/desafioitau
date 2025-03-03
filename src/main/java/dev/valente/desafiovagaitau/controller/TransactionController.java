@@ -1,5 +1,6 @@
 package dev.valente.desafiovagaitau.controller;
 
+import dev.valente.desafiovagaitau.StatisticsRepository;
 import dev.valente.desafiovagaitau.dto.TransactionDTO;
 import dev.valente.desafiovagaitau.singleton.Singletons;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @RestController
 @RequestMapping("transacao")
@@ -19,11 +21,11 @@ import java.time.OffsetDateTime;
 public class TransactionController {
 
     private final Singletons singletons = Singletons.getInstance();
+    private final StatisticsRepository statisticsRepository;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> salvarTransacao(@RequestBody @Valid TransactionDTO transaction) {
-
-        singletons.getMap().get(1L).accept(transaction.valor().doubleValue());
+        statisticsRepository.addTransaction(transaction.valor().doubleValue());
 
         log.info("Day:'{}'", transaction.dataHora().getDayOfMonth());
         log.info("Month:'{}'", transaction.dataHora().getMonth());
@@ -38,15 +40,16 @@ public class TransactionController {
 
         var filtrado = list
                 .stream()
-                .filter(l -> Duration.between(l.dataHora(), OffsetDateTime.now()).getSeconds() <= 60)
+                .filter(l -> Duration.between(l.dataHora(),
+                        OffsetDateTime.now(ZoneOffset.of("-03:00"))).getSeconds() <= 60)
                 .toList();
 
         filtrado.forEach(t -> log.info("Não sei:'{}'", t));
-        log.info("average:'{}'", singletons.getMap().get(1L).getAverage());
-        log.info("max:'{}'", singletons.getMap().get(1L).getMax());
-        log.info("min:'{}'", singletons.getMap().get(1L).getMin());
-        log.info("count:'{}'", singletons.getMap().get(1L).getCount());
-        log.info("sum:'{}'", singletons.getMap().get(1L).getSum());
+        log.info("average:'{}'", statisticsRepository.getStatistics().getAverage());
+        log.info("max:'{}'", statisticsRepository.getStatistics().getMax());
+        log.info("min:'{}'", statisticsRepository.getStatistics().getMin());
+        log.info("count:'{}'", statisticsRepository.getStatistics().getCount());
+        log.info("sum:'{}'", statisticsRepository.getStatistics().getSum());
 
 
         return ResponseEntity.status(201).build();
