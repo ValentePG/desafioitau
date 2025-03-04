@@ -1,19 +1,21 @@
 package dev.valente.desafiovagaitau.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.math.BigDecimal;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@ToString
 public class Statistics {
 
     private double sum;
-    private double average;
+    private BigDecimal average;
+    @Setter
     private double min;
+    @Setter
     private double max;
     private long count;
 }
