@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-03-04T19:28:37.6853114-03:00",
+  "statusCode": 422,
+  "error": "Unprocessable Entity",
+  "message": "O Valor da transação deve ser positivo ou igual a 0",
+  "path": "/transacao"
+}
