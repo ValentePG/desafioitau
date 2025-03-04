@@ -4,9 +4,11 @@ import dev.valente.desafiovagaitau.config.RestAssuredConfig;
 import dev.valente.desafiovagaitau.utils.FileUtils;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
+import net.javacrumbs.jsonunit.assertj.JsonAssertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = RestAssuredConfig.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -36,8 +38,57 @@ class TransactionControllerTestIT {
                 .body(request)
                 .post("/transacao")
                 .then()
-                .statusCode(201)
+                .statusCode(HttpStatus.CREATED.value())
                 .log().all();
+
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("Should return unprocessable entity 422 when some of the fields are incorrectly filled")
+    void saveTransaction_ShouldReturnUnprocessableEntity_whenSomeOfTheFieldsAreIncorrectlyFilled() {
+
+        var request = fileUtils.readFile("requests/post_savetransaction_422.json");
+
+        var responseFromFile = fileUtils.readFile("responses/post_savetransaction_422.json");
+
+        var response = RestAssured.given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(request)
+                .post("/transacao")
+                .then()
+                .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                .log().all()
+                .extract().response().asString();
+
+        JsonAssertions.assertThatJson(response)
+                .whenIgnoringPaths("timestamp")
+                .isEqualTo(responseFromFile);
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("Should return bad request 400 when given JSON is invalid")
+    void saveTransaction_ShouldReturnBadRequest_whenGivenJsonIsInvalid() {
+
+        var request = fileUtils.readFile("requests/post_savetransaction_400.json");
+
+        var responseFromFile = fileUtils.readFile("responses/post_savetransaction_400.json");
+
+        var response = RestAssured.given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(request)
+                .post("/transacao")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .log().all()
+                .extract().response().asString();
+
+        JsonAssertions.assertThatJson(response)
+                .whenIgnoringPaths("timestamp")
+                .isEqualTo(responseFromFile);
 
     }
 }
