@@ -27,7 +27,7 @@ class TransactionControllerTestIT {
 
     @Test
     @Order(1)
-    @DisplayName("Should return created 201 when transaction was save successfully")
+    @DisplayName("POST /transacao Should return created 201 when transaction was save successfully")
     void saveTransaction_ShouldReturnCreated_whenSuccessfully() {
 
         var request = fileUtils.readFile("requests/post_savetransaction_201.json");
@@ -45,7 +45,7 @@ class TransactionControllerTestIT {
 
     @Test
     @Order(2)
-    @DisplayName("Should return unprocessable entity 422 when some of the fields are incorrectly filled")
+    @DisplayName("POST /transacao Should return unprocessable entity 422 when some of the fields are incorrectly filled")
     void saveTransaction_ShouldReturnUnprocessableEntity_whenSomeOfTheFieldsAreIncorrectlyFilled() {
 
         var request = fileUtils.readFile("requests/post_savetransaction_422.json");
@@ -69,7 +69,7 @@ class TransactionControllerTestIT {
 
     @Test
     @Order(3)
-    @DisplayName("Should return bad request 400 when given JSON is invalid")
+    @DisplayName("POST /transacao Should return bad request 400 when given JSON is invalid")
     void saveTransaction_ShouldReturnBadRequest_whenGivenJsonIsInvalid() {
 
         var request = fileUtils.readFile("requests/post_savetransaction_400.json");
