@@ -8,7 +8,8 @@ import java.time.OffsetDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@ToString
+@Getter
 public class Transaction {
 
     private BigDecimal valor;
