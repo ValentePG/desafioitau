@@ -54,6 +54,14 @@
 			<version>2.18.2</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/net.javacrumbs.json-unit/json-unit-assertj -->
+		<dependency>
+			<groupId>net.javacrumbs.json-unit</groupId>
+			<artifactId>json-unit-assertj</artifactId>
+			<version>4.1.0</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>io.rest-assured</groupId>
