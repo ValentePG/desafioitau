@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -48,13 +49,21 @@ public class StatisticsService {
     }
 
     private Statistics createStatistics(DoubleSummaryStatistics statistics) {
-        return Statistics.builder()
+
+        var statistic = Statistics.builder()
                 .sum(statistics.getSum())
                 .min(statistics.getMin())
                 .max(statistics.getMax())
-                .average(statistics.getAverage())
+                .average(BigDecimal.valueOf(statistics.getAverage()).setScale(2, BigDecimal.ROUND_HALF_UP))
                 .count(statistics.getCount())
                 .build();
+
+        if (statistic.getCount() == 0){
+            statistic.setMax(0.0);
+            statistic.setMin(0.0);
+        }
+
+        return statistic;
     }
 
 }
