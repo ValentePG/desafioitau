@@ -34,7 +34,6 @@ public class StatisticsService {
     }
 
     private List<Transaction> filterList(Queue<Transaction> queue){
-        log.info("Time Window: '{}'", properties.timeWindow());
         return queue
                 .stream()
                 .filter(l -> Duration.between(l.getDataHora(),
@@ -48,22 +47,33 @@ public class StatisticsService {
         return summary;
     }
 
-    private Statistics createStatistics(DoubleSummaryStatistics statistics) {
+    private Statistics createStatistics(DoubleSummaryStatistics summaryStatistics) {
+        var sum = BigDecimal.valueOf(summaryStatistics.getSum()).setScale(2).stripTrailingZeros();
+        var avg = BigDecimal.valueOf(summaryStatistics.getAverage()).setScale(3).stripTrailingZeros();
+        var count = summaryStatistics.getCount();
 
-        var statistic = Statistics.builder()
-                .sum(statistics.getSum())
-                .min(statistics.getMin())
-                .max(statistics.getMax())
-                .average(BigDecimal.valueOf(statistics.getAverage()).setScale(2, BigDecimal.ROUND_HALF_UP))
-                .count(statistics.getCount())
-                .build();
+        var statistics = Statistics.builder()
+                        .average(avg.doubleValue())
+                        .sum(sum.doubleValue())
+                        .count(count)
+                        .build();
 
-        if (statistic.getCount() == 0){
-            statistic.setMax(0.0);
-            statistic.setMin(0.0);
-        }
+        return validateMinMax(summaryStatistics, statistics);
 
-        return statistic;
+    }
+
+    private Statistics validateMinMax(DoubleSummaryStatistics summaryStatistics, Statistics statistics) {
+        var count = summaryStatistics.getCount();
+        var max = (count == 0) ? BigDecimal.ZERO : BigDecimal
+                .valueOf(summaryStatistics.getMax()).setScale(2).stripTrailingZeros();
+        var min = (count == 0) ? BigDecimal.ZERO : BigDecimal
+                .valueOf(summaryStatistics.getMin()).setScale(2).stripTrailingZeros();
+
+        statistics.setMax(max.doubleValue());
+        statistics.setMin(min.doubleValue());
+
+        return statistics;
+
     }
 
 }
