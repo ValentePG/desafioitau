@@ -2,8 +2,6 @@ package dev.valente.desafiovagaitau.domain;
 
 import lombok.*;
 
-import java.math.BigDecimal;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +10,7 @@ import java.math.BigDecimal;
 public class Statistics {
 
     private double sum;
-    private BigDecimal average;
+    private double average;
     @Setter
     private double min;
     @Setter
