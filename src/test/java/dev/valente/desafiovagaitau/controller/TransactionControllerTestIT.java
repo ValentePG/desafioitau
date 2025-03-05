@@ -1,18 +1,18 @@
 package dev.valente.desafiovagaitau.controller;
 
-import dev.valente.desafiovagaitau.config.RestAssuredConfig;
+import dev.valente.desafiovagaitau.config.IntegrationTestsConfig;
 import dev.valente.desafiovagaitau.utils.FileUtils;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = RestAssuredConfig.class)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class TransactionControllerTestIT {
+class TransactionControllerTestIT extends IntegrationTestsConfig {
 
     @Autowired
     private RequestSpecification requestSpecification;
