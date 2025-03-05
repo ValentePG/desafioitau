@@ -15,6 +15,10 @@ public class TransactionRepository {
     private final Queue<Transaction> queue;
 
     public void clearAll(){
-        queue.clear();
+        getQueue().clear();
+    }
+
+    public void saveTransaction(Transaction transaction){
+        getQueue().add(transaction);
     }
 }

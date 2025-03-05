@@ -16,9 +16,7 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
 
     public void saveTransaction(Transaction transaction) {
-        var queue = transactionRepository.getQueue();
-        queue.add(transaction);
-        queue.forEach(q -> log.info("Queue: '{}'", q.getDataHora()));
+        transactionRepository.saveTransaction(transaction);
     }
 
     public Queue<Transaction> getQueue() {
