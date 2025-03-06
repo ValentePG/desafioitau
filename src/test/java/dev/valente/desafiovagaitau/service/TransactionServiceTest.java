@@ -40,6 +40,33 @@ class TransactionServiceTest {
     @DisplayName("save transaction should save transaction when sucessfull")
     void saveTransaction_ShouldSaveTransaction_WhenSuccessfull() {
 
+        transactionService.saveTransaction(TRANSACTION);
 
+        BDDMockito.verify(transactionRepository, BDDMockito.times(1))
+                .saveTransaction(TRANSACTION);
+        BDDMockito.verifyNoMoreInteractions(transactionRepository);
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("get queue should return a queue")
+    void getQueue_ShouldReturnQueue_WhenSuccessfull() {
+        BDDMockito.when(transactionRepository.getQueue()).thenReturn(QUEUE);
+
+        var sut = transactionService.getQueue();
+
+        Assertions.assertThat(sut).isEqualTo(QUEUE);
+
+        BDDMockito.verify(transactionRepository, BDDMockito.times(1)).getQueue();
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("clear all should clear queue")
+    void clearQueue_ShouldClearQueue_WhenSuccessfull() {
+
+        transactionService.clearAll();
+
+        BDDMockito.verify(transactionRepository, BDDMockito.times(1)).clearAll();
     }
 }
