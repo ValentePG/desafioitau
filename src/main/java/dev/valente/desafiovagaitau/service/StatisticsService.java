@@ -33,7 +33,7 @@ public class StatisticsService {
         return createStatistics(summaryStatistics);
     }
 
-    private List<Transaction> filterList(Queue<Transaction> queue){
+    private List<Transaction> filterList(Queue<Transaction> queue) {
         return queue
                 .stream()
                 .filter(l -> Duration.between(l.getDataHora(),
@@ -53,10 +53,10 @@ public class StatisticsService {
         var count = summaryStatistics.getCount();
 
         var statistics = Statistics.builder()
-                        .average(avg.doubleValue())
-                        .sum(sum.doubleValue())
-                        .count(count)
-                        .build();
+                .average(avg.doubleValue())
+                .sum(sum.doubleValue())
+                .count(count)
+                .build();
 
         return validateMinMax(summaryStatistics, statistics);
 

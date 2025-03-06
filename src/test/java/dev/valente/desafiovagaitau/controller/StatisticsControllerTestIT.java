@@ -102,7 +102,7 @@ public class StatisticsControllerTestIT extends IntegrationTestsConfig {
     }
 
     @Test
-    @Order(2)
+    @Order(4)
     @DisplayName("GET /estatistica should return empty statistics when not have any statistics to show")
     void getStatistics_ShouldReturnEmptyStatistics_WhenSuccessfull() {
 

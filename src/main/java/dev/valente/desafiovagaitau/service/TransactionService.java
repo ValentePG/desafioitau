@@ -23,7 +23,7 @@ public class TransactionService {
         return transactionRepository.getQueue();
     }
 
-    public void clearAll(){
+    public void clearAll() {
         transactionRepository.clearAll();
     }
 }

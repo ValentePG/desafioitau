@@ -14,11 +14,11 @@ public class TransactionRepository {
 
     private final Queue<Transaction> queue;
 
-    public void clearAll(){
+    public void clearAll() {
         getQueue().clear();
     }
 
-    public void saveTransaction(Transaction transaction){
+    public void saveTransaction(Transaction transaction) {
         getQueue().add(transaction);
     }
 }

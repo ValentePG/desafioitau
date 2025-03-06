@@ -25,16 +25,6 @@ class TransactionServiceTest {
 
     private final StatisticsUtil statisticsUtil = new StatisticsUtil();
 
-    @BeforeEach
-    void setUp() {
-        statisticsUtil.initiateQueue();
-    }
-
-    @AfterEach
-    void tearDown() {
-        statisticsUtil.clearQueue();
-    }
-
     @Test
     @Order(1)
     @DisplayName("save transaction should save transaction when sucessfull")

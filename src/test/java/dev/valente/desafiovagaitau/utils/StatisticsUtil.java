@@ -2,7 +2,6 @@ package dev.valente.desafiovagaitau.utils;
 
 import dev.valente.desafiovagaitau.domain.Transaction;
 import dev.valente.desafiovagaitau.dto.StatisticsResponseDTO;
-import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -47,7 +46,7 @@ public class StatisticsUtil {
             .dataHora(OffsetDateTime.now())
             .build();
 
-    public void initiateQueue(){
+    public void initiateQueue() {
         var offsetDateTime = OffsetDateTime.now();
         var offsetDateTimeMinus60 = offsetDateTime.minusSeconds(60);
         var offsetDateTimeMinus90 = offsetDateTime.minusSeconds(90);
@@ -82,7 +81,7 @@ public class StatisticsUtil {
         QUEUE.add(transaction5);
     }
 
-    public void clearQueue(){
+    public void clearQueue() {
         QUEUE.clear();
     }
 }
