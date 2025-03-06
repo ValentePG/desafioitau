@@ -91,4 +91,19 @@ class TransactionControllerTestIT extends IntegrationTestsConfig {
                 .isEqualTo(responseFromFile);
 
     }
+
+    @Test
+    @Order(4)
+    @DisplayName("DELETE /transacao Should return ok 200 when transaction was deleted successfully")
+    void deleteTransaction_ShouldReturnOk_whenSuccessfully() {
+
+        RestAssured.given()
+                .contentType("application/json")
+                .accept("application/json")
+                .delete("/transacao")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .log().all();
+
+    }
 }
