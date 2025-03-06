@@ -2,6 +2,7 @@ package dev.valente.desafiovagaitau.controller;
 
 import dev.valente.desafiovagaitau.config.IntegrationTestsConfig;
 import dev.valente.desafiovagaitau.config.Properties;
+import dev.valente.desafiovagaitau.config.RestAssuredConfig;
 import dev.valente.desafiovagaitau.repository.TransactionRepository;
 import dev.valente.desafiovagaitau.utils.FileUtils;
 import dev.valente.desafiovagaitau.utils.StatisticsUtil;
@@ -11,11 +12,14 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 import static dev.valente.desafiovagaitau.utils.StatisticsUtil.QUEUE;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = RestAssuredConfig.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class StatisticsControllerTestIT extends IntegrationTestsConfig {
 
     @Autowired
