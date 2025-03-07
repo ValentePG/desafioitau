@@ -1,7 +1,6 @@
 package dev.valente.desafiovagaitau.service;
 
 import dev.valente.desafiovagaitau.repository.TransactionRepository;
-import dev.valente.desafiovagaitau.utils.StatisticsUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,8 +21,6 @@ class TransactionServiceTest {
 
     @Mock
     private TransactionRepository transactionRepository;
-
-    private final StatisticsUtil statisticsUtil = new StatisticsUtil();
 
     @Test
     @Order(1)
