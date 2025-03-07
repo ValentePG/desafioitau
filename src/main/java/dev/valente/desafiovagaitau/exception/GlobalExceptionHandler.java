@@ -37,4 +37,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(apiError);
     }
+
+    @ExceptionHandler(TransactionInTheFuture.class)
+    public ResponseEntity<ApiError> handleTransactionInTheFutureException(TransactionInTheFuture ex,
+                                                                          HttpServletRequest request){
+        var apiError = ApiError.builder()
+                .timestamp(OffsetDateTime.now())
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(ex.getReason())
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+    }
 }
