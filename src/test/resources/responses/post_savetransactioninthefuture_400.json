@@ -1,0 +1,1 @@
+{"timestamp":"2025-03-07T07:35:09.6268424-03:00","statusCode":400,"error":"Bad Request","message":"Transação não pode ser feita no futuro","path":"/transacao"}

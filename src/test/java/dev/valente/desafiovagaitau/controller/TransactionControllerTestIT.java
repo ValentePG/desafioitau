@@ -95,6 +95,31 @@ class TransactionControllerTestIT extends IntegrationTestsConfig {
 
     @Test
     @Order(4)
+    @DisplayName("POST /transacao Should return bad request 400 when dataHora is in the future")
+    void saveTransaction_ShouldReturnBadRequest_whenGivenDataHoraIsInFuture() {
+
+        var request = fileUtils.readFile("requests/post_savetransactioninthefuture_400.json");
+
+        var responseFromFile = fileUtils.readFile("responses/post_savetransactioninthefuture_400.json");
+
+        var response = RestAssured.given()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(request)
+                .post("/transacao")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .log().all()
+                .extract().response().asString();
+
+        JsonAssertions.assertThatJson(response)
+                .whenIgnoringPaths("timestamp")
+                .isEqualTo(responseFromFile);
+
+    }
+
+    @Test
+    @Order(5)
     @DisplayName("DELETE /transacao Should return ok 200 when transaction was deleted successfully")
     void deleteTransaction_ShouldReturnOk_whenSuccessfully() {
 
