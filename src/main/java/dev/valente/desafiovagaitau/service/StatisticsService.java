@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -48,8 +49,10 @@ public class StatisticsService {
     }
 
     private Statistics createStatistics(DoubleSummaryStatistics summaryStatistics) {
-        var sum = BigDecimal.valueOf(summaryStatistics.getSum()).setScale(2).stripTrailingZeros();
-        var avg = BigDecimal.valueOf(summaryStatistics.getAverage()).setScale(3).stripTrailingZeros();
+        var sum = BigDecimal.valueOf(summaryStatistics.getSum())
+                .setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
+        var avg = BigDecimal.valueOf(summaryStatistics.getAverage())
+                .setScale(3, RoundingMode.HALF_UP).stripTrailingZeros();
         var count = summaryStatistics.getCount();
 
         var statistics = Statistics.builder()
@@ -65,9 +68,9 @@ public class StatisticsService {
     private Statistics validateMinMax(DoubleSummaryStatistics summaryStatistics, Statistics statistics) {
         var count = summaryStatistics.getCount();
         var max = (count == 0) ? BigDecimal.ZERO : BigDecimal
-                .valueOf(summaryStatistics.getMax()).setScale(2).stripTrailingZeros();
+                .valueOf(summaryStatistics.getMax()).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
         var min = (count == 0) ? BigDecimal.ZERO : BigDecimal
-                .valueOf(summaryStatistics.getMin()).setScale(2).stripTrailingZeros();
+                .valueOf(summaryStatistics.getMin()).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros();
 
         statistics.setMax(max.doubleValue());
         statistics.setMin(min.doubleValue());
