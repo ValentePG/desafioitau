@@ -3,6 +3,7 @@ package dev.valente.desafiovagaitau.controller;
 import dev.valente.desafiovagaitau.domain.Transaction;
 import dev.valente.desafiovagaitau.dto.TransactionDTO;
 import dev.valente.desafiovagaitau.service.TransactionService;
+import dev.valente.desafiovagaitau.validator.ValidTransactionInThePast;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,12 +20,15 @@ import java.time.ZoneId;
 public class TransactionController {
 
     private final TransactionService transactionService;
+    private final ValidTransactionInThePast validator;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveTransaction(@RequestBody @Valid TransactionDTO transactionDTO) {
 
         var formattedData = transactionDTO.dataHora()
                 .atZoneSameInstant(ZoneId.of("America/Sao_Paulo")).toOffsetDateTime();
+
+        validator.validTransactionInThePast(formattedData);
 
         var transaction = Transaction.builder()
                 .valor(transactionDTO.valor())
