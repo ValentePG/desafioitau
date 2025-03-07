@@ -43,12 +43,12 @@ public class GlobalExceptionHandler {
                                                                           HttpServletRequest request){
         var apiError = ApiError.builder()
                 .timestamp(OffsetDateTime.now())
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                .error(HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase())
                 .message(ex.getReason())
                 .path(request.getRequestURI())
                 .build();
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(apiError);
     }
 }

@@ -46,8 +46,8 @@ class TransactionControllerTestIT extends IntegrationTestsConfig {
 
     @Test
     @Order(2)
-    @DisplayName("POST /transacao Should return unprocessable entity 422 when some of the fields are incorrectly filled")
-    void saveTransaction_ShouldReturnUnprocessableEntity_whenSomeOfTheFieldsAreIncorrectlyFilled() {
+    @DisplayName("POST /transacao Should return unprocessable entity 422 when value is negative")
+    void saveTransaction_ShouldReturnUnprocessableEntity_whenValueIsNegative() {
 
         var request = fileUtils.readFile("requests/post_savetransaction_422.json");
 
@@ -95,7 +95,7 @@ class TransactionControllerTestIT extends IntegrationTestsConfig {
 
     @Test
     @Order(4)
-    @DisplayName("POST /transacao Should return bad request 400 when dataHora is in the future")
+    @DisplayName("POST /transacao Should return bad request 422 when dataHora is in the future")
     void saveTransaction_ShouldReturnBadRequest_whenGivenDataHoraIsInFuture() {
 
         var request = fileUtils.readFile("requests/post_savetransactioninthefuture_400.json");
@@ -108,7 +108,7 @@ class TransactionControllerTestIT extends IntegrationTestsConfig {
                 .body(request)
                 .post("/transacao")
                 .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .statusCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
                 .log().all()
                 .extract().response().asString();
 

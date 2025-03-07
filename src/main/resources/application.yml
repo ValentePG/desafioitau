@@ -3,3 +3,6 @@ spring:
     name: desafiovagaitau
 properties:
   time-window: 60
+server:
+  error:
+    include-stacktrace: never
