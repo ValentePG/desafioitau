@@ -62,20 +62,8 @@ Antes de começar, certifique-se de ter os seguintes requisitos instalados na su
 
 Você pode rodar o projeto de duas formas:
 
-- Método 1: Rodando sem Docker (Configuração Manual)
-  - Se optar por rodar sem Docker, você precisa ter um banco de dados `PostgreSQL` e uma instância do `RabbitMQ` rodando localmente.
-  - Além disso, será necessário editar a configuração no arquivo `application-dev.yml` para apontar para o banco de dados local:
-  
-        spring:
-          datasource:
-            url: jdbc:postgresql://localhost:5432/picpaysimplificado?createDatabaseIfNotExist=true
-    
-- Alterar o host do RabbitMQ para localhost:
+- Método 1: Rodando sem Docker
 
-  
-      rabbitmq:
-        host: localhost
-  
 - Executar o projeto:
   - Linux/MacOs
   
@@ -103,8 +91,6 @@ Após iniciar o projeto, os endpoints da API estarão disponíveis nos seguintes
       http://localhost:8080/swagger-ui.html
 
 5️⃣ Rodar os testes (opcional)
-
-⚠️ IMPORTANTE: Os testes de integração utilizam Testcontainers, então é necessário que o Docker esteja rodando antes de executá-los.
 
 - **Para rodar os testes unitários**
 
