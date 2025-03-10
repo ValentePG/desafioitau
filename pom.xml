@@ -19,6 +19,8 @@
 		<jsr310.version>2.18.2</jsr310.version>
 		<springdoc.version>2.8.5</springdoc.version>
 		<json-unit.version>4.1.0</json-unit.version>
+		<jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
+		<jib-maven-plugin.image>eclipse-temurin:21-jre</jib-maven-plugin.image>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -45,6 +47,10 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -112,6 +118,19 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>${jib-maven-plugin.version}</version>
+				<configuration>
+					<from>
+						<image>${jib-maven-plugin.image}</image>
+					</from>
+					<container>
+						<format>OCI</format>
+					</container>
 				</configuration>
 			</plugin>
 		</plugins>
