@@ -25,12 +25,22 @@ public class StatisticsService {
     private final Properties properties;
 
     public Statistics getStatistics() {
+        log.info("Iniciando cálculo de estatísticas");
 
         var queue = transactionService.getQueue();
+        log.debug("Fila de transações obtida. Tamanho: {}", queue.size());
 
         var filteredList = filterList(queue);
+        log.debug("Lista filtrada. Restam {} transações após o filtro", filteredList.size());
+
+        log.info("Calculando estatísticas...");
+
+        long startTime = System.nanoTime();
+
         var summaryStatistics = calculateStatistics(filteredList);
 
+        long endTime = System.nanoTime();
+        log.info("Tempo de execução: {} nanosegundos", (endTime - startTime));
         return createStatistics(summaryStatistics);
     }
 
@@ -75,8 +85,7 @@ public class StatisticsService {
         statistics.setMax(max.doubleValue());
         statistics.setMin(min.doubleValue());
 
+        log.info("Estatísticas calculadas: {}", statistics.toString());
         return statistics;
-
     }
-
 }

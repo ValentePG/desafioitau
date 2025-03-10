@@ -1,9 +1,9 @@
 package dev.valente.desafiovagaitau.controller;
 
+import dev.valente.desafiovagaitau.config.openapi.SchemaBadRequest;
+import dev.valente.desafiovagaitau.config.openapi.SchemaUnprocessableEntity;
 import dev.valente.desafiovagaitau.domain.Transaction;
-import dev.valente.desafiovagaitau.dto.StatisticsResponseDTO;
 import dev.valente.desafiovagaitau.dto.TransactionDTO;
-import dev.valente.desafiovagaitau.exception.ApiError;
 import dev.valente.desafiovagaitau.service.TransactionService;
 import dev.valente.desafiovagaitau.validator.ValidTransactionInThePast;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,26 +47,31 @@ public class TransactionController {
                             "se o valor for negativo",
                             responseCode = "422",
                             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ApiError.class))),
+                                    schema = @Schema(implementation = SchemaUnprocessableEntity.class))),
                     @ApiResponse(description = "Retorna bad request se o json for inválido",
-                    responseCode = "400",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = ApiError.class))),
+                            responseCode = "400",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = SchemaBadRequest.class))),
             }
     )
     public ResponseEntity<Void> saveTransaction(@RequestBody @Valid TransactionDTO transactionDTO) {
+        log.debug("Recebida nova transação: {}", transactionDTO);
 
         var formattedData = transactionDTO.dataHora()
                 .atZoneSameInstant(ZoneId.of("America/Sao_Paulo")).toOffsetDateTime();
 
         validator.validTransactionInThePast(formattedData);
+        log.debug("Data e hora formatadas para America/Sao_Paulo: {}", formattedData);
 
         var transaction = Transaction.builder()
                 .valor(transactionDTO.valor())
                 .dataHora(formattedData)
                 .build();
+        log.debug("DTO mapeado para entidade: {}", transaction);
 
         transactionService.saveTransaction(transaction);
+        log.info("Transação salva com sucesso. Valor: {}, Data: {}",
+                transaction.getValor(), transaction.getDataHora());
 
         return ResponseEntity.status(201).build();
     }
@@ -81,7 +86,9 @@ public class TransactionController {
     )
     public ResponseEntity<Void> deleteTransaction() {
 
+
         transactionService.clearAll();
+        log.info("Fila limpa com sucesso");
 
         return ResponseEntity.ok().build();
     }
