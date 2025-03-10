@@ -129,13 +129,9 @@ Após iniciar o projeto, os endpoints da API estarão disponíveis nos seguintes
 
 - Spring Boot 3.4.2
 
-- Docker 27.5.1
-
-- RabbitMQ (imagem: rabbitmq:4-management)
-
-- PostgreSQL (imagem: postgres:16)
-
+- Docker 28.0.1
 
 # 📄 Licença
 Este projeto está sob a licença MIT - veja o arquivo LICENSE para mais detalhes.
+mvn compile jib:dockerBuild 
 
