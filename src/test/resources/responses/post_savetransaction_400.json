@@ -1,6 +1,1 @@
-{
-  "timestamp": "2025-03-04T22:35:16.835+00:00",
-  "status": 400,
-  "error": "Bad Request",
-  "path": "/transacao"
-}
+{"timestamp":"2025-03-10T15:57:43.0001192-03:00","statusCode":400,"error":"Bad Request","message":"JSON parse error","path":"/transacao"}
