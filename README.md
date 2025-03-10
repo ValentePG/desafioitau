@@ -1,8 +1,7 @@
 # 📌 Desafio Junior Itaú
 
+- Descrição completa do projeto [aqui](https://github.com/rafaellins-itau/desafio-itau-vaga-99-junior?tab=readme-ov-file)
 <!--
-- Descrição completa do projeto [aqui](https://github.com/PicPay/picpay-desafio-backend)
-- Diagramas do projeto [aqui](/design/Diagramas.md)
   
 Basicamente o desafio proposto é desenvolver o fluxo de uma aplicação que faz transações entre carteiras, existem 2 tipos de carteiras, a comum e a dos lojistas, sendo que a dos lojistas só é possível receber transações.
 
