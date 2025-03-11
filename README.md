@@ -23,26 +23,21 @@ Basicamente o desafio proposto é desenvolver o fluxo de uma aplicação que faz
       }
   
 - Sendo value o valor da transação, payer sendo o id da carteira do pagador da transação, e payee sendo o id da carteira do recebedor da transação.
-
+!-->
 # 📦 Pré-requisitos
 
 Antes de começar, certifique-se de ter os seguintes requisitos instalados na sua máquina:
 
-
-- [Docker](https://www.docker.com/get-started) (versão recomendada: `27.5.1`)
+- [Docker](https://www.docker.com/get-started) (versão recomendada: `28.0.1`)
   
 - (Opcional) [Java 21](https://www.oracle.com/java/technologies/downloads/#java21) e [Maven 3.9.9](https://maven.apache.org/download.cgi) para rodar sem Docker
-  
-- (Opcional) PostgreSQL 16
-  
-- (Opcional) RabbitMQ 4
   
 # 🚀 Passo a passo para rodar o projeto
 
 1️⃣ Clonar o repositório
 
-    git clone https://github.com/ValentePG/desafiopicpaysimplificado.git
-    cd desafiopicpaysimplificado
+    git clone https://github.com/ValentePG/desafioitau.git
+    cd desafioitau
     
 2️⃣ Instalar dependências
 
@@ -73,10 +68,15 @@ Você pode rodar o projeto de duas formas:
   
         mvnw.cmd spring-boot:run
 
-- Método 2: Rodando com Docker (Recomendado)
-Caso tenha o Docker instalado, basta rodar um único comando, e tudo será iniciado automaticamente:
+- Método 2: Rodando com Docker
 
-      docker compose -f compose-dev.yml up
+    Caso tenha o Docker instalado **(Certifique-se de estar autenticado no docker engine)**, você vai precisar buildar a imagem para seu docker daemon com:
+
+      mvn compile jib:dockerBuild
+
+    Logo após, rodar o comando:
+
+      docker run -d -p 8080:8080 --name desafioitau desafiovagaitau:0.0.1-SNAPSHOT  
 
 4️⃣ Acessando a API
 
@@ -84,11 +84,17 @@ Após iniciar o projeto, os endpoints da API estarão disponíveis nos seguintes
 
 - API:
 
-      http://localhost:8080/transfer
+      GET http://localhost:8080/estatistica
+      POST http://localhost:8080/transacao
+      DELETE http://localhost:8080/transacao
 
 - Swagger:
 
       http://localhost:8080/swagger-ui.html
+
+- HealthCheck
+      
+      http://localhost:8080/actuator/health
 
 5️⃣ Rodar os testes (opcional)
 
@@ -113,11 +119,11 @@ Após iniciar o projeto, os endpoints da API estarão disponíveis nos seguintes
 
 - Java 21
 
-- Spring Boot 3.4.2
+- Spring Boot 3.4.3
 
 - Docker 28.0.1
 
 # 📄 Licença
 Este projeto está sob a licença MIT - veja o arquivo LICENSE para mais detalhes.
-mvn compile jib:dockerBuild 
+
 
