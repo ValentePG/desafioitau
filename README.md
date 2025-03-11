@@ -1,29 +1,7 @@
 # 📌 Desafio Junior Itaú
 
 - Descrição completa do projeto [aqui](https://github.com/rafaellins-itau/desafio-itau-vaga-99-junior?tab=readme-ov-file)
-<!--
-  
-Basicamente o desafio proposto é desenvolver o fluxo de uma aplicação que faz transações entre carteiras, existem 2 tipos de carteiras, a comum e a dos lojistas, sendo que a dos lojistas só é possível receber transações.
 
-- **Atenção:** O sistema ja inicia com 3 carteiras, a carteira 1 do tipo comum, a carteira 2 do tipo lojista e a carteira 3 do tipo comum.
-
-- O sistema possui um endpoint:
-
-      POST /v1/transfer
-  
-- Que aceita apenas Json neste formato:
-
-      POST /v1/transfer
-      Content-Type: application/json
-      
-      {
-        "value": 100.0,
-        "payer": 1,
-        "payee": 3
-      }
-  
-- Sendo value o valor da transação, payer sendo o id da carteira do pagador da transação, e payee sendo o id da carteira do recebedor da transação.
-!-->
 # 📦 Pré-requisitos
 
 Antes de começar, certifique-se de ter os seguintes requisitos instalados na sua máquina:
