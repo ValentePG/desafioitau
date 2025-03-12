@@ -27,7 +27,7 @@ Antes de começar, certifique-se de ter os seguintes requisitos instalados na su
     
       mvnw.cmd clean install
   
-💡 Caso tenha Maven instalado globalmente, você pode rodar:
+💡 Caso tenha Maven instalado globalmente, você pode rodar todos os comandos utilizando apenas mvn exemplo:
 
      mvn clean install
      
@@ -49,9 +49,9 @@ Você pode rodar o projeto de duas formas:
 - Método 2: Rodando com Docker
 
     Caso tenha o Docker instalado **(Certifique-se de estar autenticado no docker engine)**, você vai precisar buildar a imagem para seu docker daemon com:
-
-      mvn compile jib:dockerBuild
-
+  
+      ./mvnw compile jib:dockerBuild
+  
     Logo após, rodar o comando:
 
       docker run -d -p 8080:8080 --name desafioitau desafiovagaitau:0.0.1-SNAPSHOT  
